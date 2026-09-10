@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tawau Explorer - discover attractions, nature, restaurants, car rental and accommodation in Tawau, Sabah.">
+  <title>Tawau Explorer | Discover Tawau</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="logo" href="index.html">Tawau<span>Explorer</span></a>
+  <button class="menu-toggle" aria-label="Open menu">☰</button>
+  <nav class="nav">
+    <a class="active" href="index.html">Home</a>
+    <a href="destinations.html">Destinations</a>
+    <a href="restaurants.html">Restaurants</a>
+    <a href="car-rental.html">Car Rental</a>
+    <a href="accommodation.html">Accommodation</a>
+    <a href="map.html">Map</a>
+    <a href="travel-info.html">Travel Info</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-overlay">
+    <p class="eyebrow">TRAVEL GUIDE • TAWAU, SABAH</p>
+    <h1>Discover Tawau</h1>
+    <p>Explore the city, experience nature, taste local food, find a car and choose a place to stay.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="destinations.html">Explore Destinations</a>
+      <a class="btn btn-light" href="map.html">Open Interactive Map</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div><p class="eyebrow">EXPLORE</p><h2>Everything you need in Tawau</h2></div>
+  </div>
+  <div class="feature-grid">
+    <a class="feature-card" href="city-attractions.html"><span>🏙️</span><h3>City Attractions</h3><p>Discover landmarks, markets, history and local culture.</p></a>
+    <a class="feature-card" href="nature.html"><span>🌿</span><h3>Nature & Adventure</h3><p>Find waterfalls, hot springs and hiking destinations.</p></a>
+    <a class="feature-card" href="restaurants.html"><span>🍜</span><h3>Food & Cafés</h3><p>Browse highly rated restaurants and cafés in Tawau.</p></a>
+    <a class="feature-card" href="car-rental.html"><span>🚗</span><h3>Car Rental</h3><p>Find rental locations and useful rental information.</p></a>
+    <a class="feature-card" href="accommodation.html"><span>🏨</span><h3>Accommodation</h3><p>Compare hotels, homestays and places to stay.</p></a>
+    <a class="feature-card" href="map.html"><span>🗺️</span><h3>Interactive Map</h3><p>See all categories together using colour-coded pins.</p></a>
+  </div>
+</section>
+
+<section class="section soft">
+  <div class="section-heading">
+    <div><p class="eyebrow">POPULAR</p><h2>Places to explore</h2></div>
+    <a class="text-link" href="destinations.html">View all →</a>
+  </div>
+  <div id="home-destinations" class="card-grid"></div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div><p class="eyebrow">TASTE TAWAU</p><h2>Top restaurants & cafés</h2></div>
+    <a class="text-link" href="restaurants.html">View all →</a>
+  </div>
+  <div id="home-restaurants" class="card-grid"></div>
+</section>
+
+<section class="map-cta">
+  <div>
+    <p class="eyebrow">ONE MAP, MANY PLACES</p>
+    <h2>Explore Tawau on one interactive map</h2>
+    <p>Different colours make it easy to identify attractions, nature, restaurants, car rental and accommodation.</p>
+  </div>
+  <a class="btn btn-light" href="map.html">Explore Tawau Map</a>
+</section>
+</main>
+
+<footer class="footer">
+  <div><strong>TawauExplorer</strong><p>A student tourism website concept for Tawau, Sabah.</p></div>
+  <div><p>© 2026 Tawau Explorer</p></div>
+</footer>
+<script src="data/attractions.js"></script>
+<script src="data/restaurants.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

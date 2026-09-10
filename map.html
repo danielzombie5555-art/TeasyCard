@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Interactive Map | Tawau Explorer</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></head>
+<body><header class="site-header"><a class="logo" href="index.html">Tawau<span>Explorer</span></a><button class="menu-toggle">☰</button><nav class="nav"><a href="index.html">Home</a><a href="destinations.html">Destinations</a><a href="restaurants.html">Restaurants</a><a href="car-rental.html">Car Rental</a><a href="accommodation.html">Accommodation</a><a class="active" href="map.html">Map</a><a href="travel-info.html">Travel Info</a></nav></header>
+<main><section class="map-page"><div class="map-top"><div><p class="eyebrow">TAWAU LOCATION GUIDE</p><h1>Interactive Map</h1><p>Use the colour-coded pins to identify each category.</p></div><div class="legend"><span><i class="pin-dot purple"></i> City</span><span><i class="pin-dot green"></i> Nature</span><span><i class="pin-dot red"></i> Restaurant</span><span><i class="pin-dot blue"></i> Car Rental</span><span><i class="pin-dot orange"></i> Accommodation</span></div></div>
+<div class="map-filters"><button class="map-filter active" data-map-filter="all">All</button><button class="map-filter" data-map-filter="city">🟣 City</button><button class="map-filter" data-map-filter="nature">🟢 Nature</button><button class="map-filter" data-map-filter="restaurant">🔴 Restaurants</button><button class="map-filter" data-map-filter="rental">🔵 Car Rental</button><button class="map-filter" data-map-filter="accommodation">🟠 Accommodation</button></div><div id="map"></div></section></main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="data/attractions.js"></script><script src="data/restaurants.js"></script><script src="data/car-rentals.js"></script><script src="data/accommodation.js"></script><script src="js/map.js"></script></body></html>
+<div class="map-filters">
+    <button class="map-filter active" data-map-filter="all">
+        All
+    </button>
+
+    <button class="map-filter" data-map-filter="city">
+        🟣 City
+    </button>
+
+    <button class="map-filter" data-map-filter="nature">
+        🟢 Nature
+    </button>
+
+    <button class="map-filter" data-map-filter="restaurant">
+        🔴 Restaurants
+    </button>
+
+    <button class="map-filter" data-map-filter="rental">
+        🔵 Car Rental
+    </button>
+
+    <button class="map-filter" data-map-filter="accommodation">
+        🟠 Accommodation
+    </button>
+</div>
+
+<div id="map"></div>

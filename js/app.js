@@ -1,0 +1,23 @@
+function stars(r){return r?`<span class="rating">★ ${r.toFixed(1)}</span>`:'<span class="meta">Rating pending</span>'}
+function destinationCard(x){return `<article class="card"><img class="card-image" src="${x.image}" alt="${x.name}" loading="lazy"><div class="card-body"><span class="tag">${x.typeLabel}</span><h3>${x.name}</h3><p>${stars(x.rating)} <span class="meta"> • 📍 ${x.location}</span></p><p class="meta">${x.description}</p><div class="card-actions"><a class="small-btn" href="map.html?place=${encodeURIComponent(x.id)}">View on Map</a></div></div></article>`}
+function restaurantCard(x){return `<article class="card"><img class="card-image" src="${x.image}" alt="${x.name}" loading="lazy"><div class="card-body"><span class="tag">${x.category==='cafe'?'Café':'Restaurant'}</span><h3>${x.name}</h3><p>${stars(x.rating)} <span class="meta"> • ${x.reviews||0} reviews</span></p><p class="meta">🍜 ${x.cuisine}<br>📍 ${x.location}</p><p><strong>🔥 Popular:</strong> ${x.bestSeller.join(', ')}</p><div class="card-actions"><a class="small-btn" href="map.html?place=${encodeURIComponent(x.id)}">View on Map</a></div></div></article>`}
+function rentalCard(x){return `<article class="card"><img class="card-image" src="${x.image}" alt="${x.name}" loading="lazy"><div class="card-body"><span class="tag">Car Rental</span><h3>${x.name}</h3><p>${stars(x.rating)} <span class="meta"> • ${x.reviews} reviews</span></p><p class="meta">📍 ${x.location}<br>🚗 ${x.vehicle}<br>💰 ${x.price}</p><p>${x.description}</p><div class="card-actions"><a class="small-btn" href="map.html?place=${encodeURIComponent(x.id)}">View on Map</a></div></div></article>`}
+function stayCard(x){return `<article class="card"><img class="card-image" src="${x.image}" alt="${x.name}" loading="lazy"><div class="card-body"><span class="tag">${x.typeLabel}</span><h3>${x.name}</h3><p>${stars(x.rating)} <span class="meta"> • ${x.reviews||0} reviews</span></p><p class="meta">📍 ${x.location}<br>💰 ${x.price}</p><p>${x.description}</p><p class="meta">${x.facilities.map(f=>'• '+f).join(' ')}</p><div class="card-actions"><a class="small-btn" href="map.html?place=${encodeURIComponent(x.id)}">View on Map</a></div></div></article>`}
+function render(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html}
+function setupMenu(){const b=document.querySelector('.menu-toggle'),n=document.querySelector('.nav');if(b&&n)b.onclick=()=>n.classList.toggle('open')}
+document.addEventListener('DOMContentLoaded',()=>{
+setupMenu();
+if(typeof attractions!=='undefined'){
+ const all=document.getElementById('destination-list'); if(all){const draw=f=>render('destination-list',attractions.filter(x=>f==='all'||x.type===f).map(destinationCard).join(''));draw('all');document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');draw(b.dataset.filter)})}
+ render('city-list',attractions.filter(x=>x.type==='city').map(destinationCard).join(''));
+ render('nature-list',attractions.filter(x=>x.type==='nature').map(destinationCard).join(''));
+ render('home-destinations',attractions.slice(0,6).map(destinationCard).join(''));
+}
+if(typeof restaurants!=='undefined'){
+ render('home-restaurants',restaurants.slice(0,3).map(restaurantCard).join(''));
+ const list=document.getElementById('restaurant-list');
+ if(list){let filter='all';const draw=()=>{const q=(document.getElementById('restaurant-search')?.value||'').toLowerCase();render('restaurant-list',restaurants.filter(x=>(filter==='all'||x.category===filter)&&(x.name+x.cuisine+x.location).toLowerCase().includes(q)).map(restaurantCard).join('')||'<p>No matching restaurant found.</p>')};draw();document.querySelectorAll('[data-food-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-food-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.foodFilter;draw()});document.getElementById('restaurant-search').oninput=draw}
+}
+if(typeof carRentals!=='undefined')render('rental-list',carRentals.map(rentalCard).join(''));
+if(typeof accommodations!=='undefined'){const list=document.getElementById('accommodation-list');if(list){const draw=f=>render('accommodation-list',accommodations.filter(x=>f==='all'||x.type===f).map(stayCard).join(''));draw('all');document.querySelectorAll('[data-stay-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-stay-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');draw(b.dataset.stayFilter)})}}
+});
