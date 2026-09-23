@@ -1,4 +1,4 @@
-# Tawau Explorer
+# TeasyCard
 
 A responsive HTML/CSS/JavaScript tourism website concept focused on Tawau, Sabah.
 

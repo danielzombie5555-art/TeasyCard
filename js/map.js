@@ -1,40 +1,20 @@
-// ==========================================
-// TAWAU EXPLORER - INTERACTIVE MAP
-// ==========================================
+// ===============================
+// TEASYCARD INTERACTIVE MAP
+// ===============================
 
-// Tawau default location
-const TAWAU_CENTER = [4.245, 117.895];
+// Tawau map
+const map = L.map("map").setView([4.245, 117.895], 12);
 
-const map = L.map("map", {
-    center: TAWAU_CENTER,
-    zoom: 11,
-    zoomControl: false,
-    scrollWheelZoom: true
-});
-
-// ==========================================
-// MAP TILE
-// ==========================================
-
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        maxZoom: 19,
-        attribution: "&copy; OpenStreetMap contributors"
-    }
-).addTo(map);
-
-// ==========================================
-// ZOOM CONTROL
-// ==========================================
-
-L.control.zoom({
-    position: "bottomright"
+// OpenStreetMap
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-// ==========================================
-// MARKER GROUPS
-// ==========================================
+
+// ===============================
+// CATEGORY GROUPS
+// ===============================
 
 const groups = {
     city: [],
@@ -44,378 +24,237 @@ const groups = {
     accommodation: []
 };
 
-// ==========================================
-// CATEGORY SETTINGS
-// ==========================================
 
-const categoryInfo = {
-    city: {
-        color: "purple",
-        label: "City",
-        icon: "🏙️"
-    },
+// ===============================
+// MARKER COLOURS
+// ===============================
 
-    nature: {
-        color: "green",
-        label: "Nature",
-        icon: "🌿"
-    },
-
-    restaurant: {
-        color: "red",
-        label: "Restaurant",
-        icon: "🍽️"
-    },
-
-    rental: {
-        color: "blue",
-        label: "Car Rental",
-        icon: "🚗"
-    },
-
-    accommodation: {
-        color: "orange",
-        label: "Accommodation",
-        icon: "🏨"
-    }
+const colors = {
+    city: "#7b3fb5",
+    nature: "#249653",
+    restaurant: "#d83a3a",
+    rental: "#3178d1",
+    accommodation: "#e48a21"
 };
 
-// ==========================================
-// DESTINATION PAGE
-// ==========================================
 
-function getCategoryPage(type) {
+// ===============================
+// CREATE MARKER
+// ===============================
 
-    if (type === "restaurant") {
-        return "restaurants.html";
-    }
+function addMarker(item, category) {
 
-    if (type === "rental") {
-        return "car-rental.html";
-    }
-
-    if (type === "accommodation") {
-        return "accommodation.html";
-    }
-
-    return "destinations.html";
-}
-
-// ==========================================
-// CREATE CUSTOM MARKER
-// ==========================================
-
-function createMarkerIcon(type) {
-
-    const info = categoryInfo[type];
-
-    return L.divIcon({
-        className: "tawau-marker-wrapper",
-
-        html: `
-            <div class="custom-marker marker-${info.color}">
-                <span></span>
-            </div>
-        `,
-
-        iconSize: [30, 38],
-        iconAnchor: [15, 38],
-        popupAnchor: [0, -36]
-    });
-}
-
-// ==========================================
-// ADD MARKER
-// ==========================================
-
-function addMarker(place, type) {
-
-    // Check coordinate
+    // Check coordinates
     if (
-        typeof place.lat !== "number" ||
-        typeof place.lon !== "number"
+        item.lat === undefined ||
+        item.lon === undefined ||
+        item.lat === null ||
+        item.lon === null ||
+        item.lat === 0 ||
+        item.lon === 0
     ) {
-        console.warn(
-            "Invalid coordinates:",
-            place.name,
-            place.lat,
-            place.lon
-        );
-
+        console.warn("Marker skipped - no coordinates:", item.name);
         return;
     }
 
-    // Check category
-    if (!groups[type]) {
-        console.warn(
-            "Unknown category:",
-            type,
-            place.name
-        );
+    const markerHTML = `
+        <div
+            style="
+                width:20px;
+                height:20px;
+                background:${colors[category]};
+                border:3px solid white;
+                border-radius:50%;
+                box-shadow:0 2px 6px rgba(0,0,0,0.4);
+            "
+        ></div>
+    `;
 
-        return;
-    }
-
-    const info = categoryInfo[type];
+    const icon = L.divIcon({
+        className: "",
+        html: markerHTML,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+    });
 
     const marker = L.marker(
-        [place.lat, place.lon],
+        [Number(item.lat), Number(item.lon)],
         {
-            icon: createMarkerIcon(type),
-            riseOnHover: true
+            icon: icon
         }
     );
 
-    marker.category = type;
-    marker.placeName = place.name || "";
+    let popup = `
+        <div style="min-width:220px">
 
-    // ======================================
-    // RATING
-    // ======================================
-
-    let ratingHTML = "";
-
-    if (place.rating) {
-
-        ratingHTML = `
-            <div class="popup-rating">
-                <span>★</span>
-                ${place.rating}
-            </div>
-        `;
-
-    } else {
-
-        ratingHTML = `
-            <div class="popup-rating pending">
-                Rating pending
-            </div>
-        `;
-    }
-
-    // ======================================
-    // DESCRIPTION
-    // ======================================
-
-    const description =
-        place.description ||
-        "Explore this location in Tawau.";
-
-    // ======================================
-    // LOCATION
-    // ======================================
-
-    const location =
-        place.location ||
-        "Tawau, Sabah";
-
-    // ======================================
-    // POPUP
-    // ======================================
-
-    const popupHTML = `
-
-        <div class="map-popup">
-
-            <div class="popup-category popup-${info.color}">
-                ${info.icon}
-                ${info.label}
-            </div>
-
-            <h3>
-                ${place.name || "Unnamed Location"}
+            <h3 style="margin-bottom:8px;">
+                ${item.name || "Unknown"}
             </h3>
 
-            ${ratingHTML}
+            ${item.rating ? `
+                <p>
+                    ⭐ ${item.rating}
+                </p>
+            ` : ""}
 
-            <div class="popup-location">
-                📍 ${location}
-            </div>
+            ${item.location ? `
+                <p>
+                    📍 ${item.location}
+                </p>
+            ` : ""}
 
-            <p class="popup-description">
-                ${description}
-            </p>
+            ${item.hours ? `
+                <p>
+                    🕒 ${item.hours}
+                </p>
+            ` : ""}
 
-            <div class="popup-actions">
+            ${item.phone ? `
+                <p>
+                    📞 ${item.phone}
+                </p>
+            ` : ""}
 
-                <a
-                    class="popup-button primary"
-                    href="${getCategoryPage(type)}"
-                >
-                    View Details
-                </a>
+            ${item.description ? `
+                <p>
+                    ${item.description}
+                </p>
+            ` : ""}
 
-                <a
-                    class="popup-button secondary"
-                    href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Directions
-                </a>
-
-            </div>
+            <a
+                href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lon}"
+                target="_blank"
+                style="
+                    display:inline-block;
+                    margin-top:8px;
+                    padding:8px 12px;
+                    background:#3178d1;
+                    color:white;
+                    text-decoration:none;
+                    border-radius:6px;
+                "
+            >
+                📍 Directions
+            </a>
 
         </div>
     `;
 
-    marker.bindPopup(popupHTML, {
-        maxWidth: 320,
-        minWidth: 260,
-        closeButton: true
-    });
+    marker.bindPopup(popup);
 
-    // ======================================
-    // HOVER EFFECT
-    // ======================================
+    marker.category = category;
 
-    marker.on("mouseover", function () {
-        this.setZIndexOffset(1000);
-    });
-
-    marker.on("mouseout", function () {
-        this.setZIndexOffset(0);
-    });
-
-    // ======================================
-    // SAVE + ADD
-    // ======================================
-
-    groups[type].push(marker);
+    groups[category].push(marker);
 
     marker.addTo(map);
 }
 
-// ==========================================
-// LOAD ATTRACTIONS
-// ==========================================
+
+// ===============================
+// LOAD CITY & NATURE
+// ===============================
 
 if (typeof attractions !== "undefined") {
 
-    attractions.forEach(place => {
+    attractions.forEach(function(item) {
 
-        const type =
-            place.type || "nature";
+        if (item.type === "city") {
+            addMarker(item, "city");
+        }
 
-        addMarker(place, type);
+        else if (item.type === "nature") {
+            addMarker(item, "nature");
+        }
 
     });
 
-} else {
-
-    console.warn(
-        "attractions.js not loaded."
-    );
 }
 
-// ==========================================
+
+// ===============================
 // LOAD RESTAURANTS
-// ==========================================
+// ===============================
 
 if (typeof restaurants !== "undefined") {
 
-    restaurants.forEach(place => {
+    restaurants.forEach(function(item) {
 
-        addMarker(
-            place,
-            "restaurant"
-        );
+        addMarker(item, "restaurant");
 
     });
 
-} else {
-
-    console.warn(
-        "restaurants.js not loaded."
-    );
 }
 
-// ==========================================
+
+// ===============================
 // LOAD CAR RENTALS
-// ==========================================
+// ===============================
 
 if (typeof carRentals !== "undefined") {
 
-    carRentals.forEach(place => {
+    carRentals.forEach(function(item) {
 
-        addMarker(
-            place,
-            "rental"
-        );
+        addMarker(item, "rental");
 
     });
 
-} else {
-
-    console.warn(
-        "car-rentals.js not loaded."
-    );
 }
 
-// ==========================================
+
+// ===============================
 // LOAD ACCOMMODATION
-// ==========================================
+// ===============================
 
 if (typeof accommodations !== "undefined") {
 
-    accommodations.forEach(place => {
+    accommodations.forEach(function(item) {
 
-        addMarker(
-            place,
-            "accommodation"
-        );
+        addMarker(item, "accommodation");
 
     });
 
-} else {
-
-    console.warn(
-        "accommodation.js not loaded."
-    );
 }
 
-// ==========================================
-// GET ALL MARKERS
-// ==========================================
 
-function getAllMarkers() {
-
-    return Object
-        .values(groups)
-        .flat();
-
-}
-
-// ==========================================
+// ===============================
 // FILTER MAP
-// ==========================================
+// ===============================
 
-function filterMap(type) {
-
-    const allMarkers =
-        getAllMarkers();
+function filterMap(category) {
 
     // Remove all markers
-    allMarkers.forEach(marker => {
+    Object.values(groups).forEach(function(group) {
 
-        if (map.hasLayer(marker)) {
+        group.forEach(function(marker) {
+
             map.removeLayer(marker);
-        }
+
+        });
 
     });
 
+
+    // Show all
+    if (category === "all") {
+
+        Object.values(groups).forEach(function(group) {
+
+            group.forEach(function(marker) {
+
+                marker.addTo(map);
+
+            });
+
+        });
+
+        return;
+    }
+
+
     // Show selected category
-    if (type === "all") {
+    if (groups[category]) {
 
-        allMarkers.forEach(marker => {
-
-            marker.addTo(map);
-
-        });
-
-    } else if (groups[type]) {
-
-        groups[type].forEach(marker => {
+        groups[category].forEach(function(marker) {
 
             marker.addTo(map);
 
@@ -423,248 +262,70 @@ function filterMap(type) {
 
     }
 
-    // Update map view
-    const visibleMarkers =
-        type === "all"
-            ? allMarkers
-            : groups[type] || [];
-
-    if (visibleMarkers.length > 0) {
-
-        const bounds =
-            L.featureGroup(visibleMarkers)
-                .getBounds();
-
-        map.fitBounds(
-            bounds,
-            {
-                padding: [40, 40],
-                maxZoom: 13
-            }
-        );
-
-    }
 }
 
-// ==========================================
+
+// ===============================
 // FILTER BUTTONS
-// ==========================================
+// ===============================
 
 document
     .querySelectorAll("[data-map-filter]")
-    .forEach(button => {
+    .forEach(function(button) {
 
-        button.addEventListener(
-            "click",
-            function () {
+        button.addEventListener("click", function() {
 
-                document
-                    .querySelectorAll(
-                        "[data-map-filter]"
-                    )
-                    .forEach(btn => {
+            // Remove active
+            document
+                .querySelectorAll("[data-map-filter]")
+                .forEach(function(btn) {
 
-                        btn.classList.remove(
-                            "active"
-                        );
+                    btn.classList.remove("active");
 
-                    });
+                });
 
-                this.classList.add("active");
 
-                const filter =
-                    this.dataset.mapFilter;
+            // Add active
+            button.classList.add("active");
 
-                filterMap(filter);
 
-            }
-        );
+            // Filter
+            filterMap(
+                button.dataset.mapFilter
+            );
+
+        });
 
     });
 
-// ==========================================
-// LOCATE USER
-// ==========================================
 
-const LocateControl =
-    L.Control.extend({
+// ===============================
+// CONSOLE CHECK
+// ===============================
 
-        options: {
-            position: "bottomright"
-        },
+console.log("TeasyCard Map Loaded");
 
-        onAdd: function () {
-
-            const container =
-                L.DomUtil.create(
-                    "div",
-                    "leaflet-bar leaflet-control"
-                );
-
-            const button =
-                L.DomUtil.create(
-                    "a",
-                    "map-control-button",
-                    container
-                );
-
-            button.innerHTML = "⌖";
-            button.title =
-                "Find my location";
-
-            button.href = "#";
-
-            L.DomEvent.disableClickPropagation(
-                button
-            );
-
-            L.DomEvent.on(
-                button,
-                "click",
-                function (event) {
-
-                    L.DomEvent.preventDefault(
-                        event
-                    );
-
-                    map.locate({
-                        setView: true,
-                        maxZoom: 15,
-                        enableHighAccuracy: true
-                    });
-
-                }
-            );
-
-            return container;
-        }
-    });
-
-map.addControl(
-    new LocateControl()
+console.log(
+    "City:",
+    groups.city.length
 );
 
-// ==========================================
-// LOCATION FOUND
-// ==========================================
-
-let userLocationMarker = null;
-
-map.on(
-    "locationfound",
-    function (event) {
-
-        if (userLocationMarker) {
-            map.removeLayer(
-                userLocationMarker
-            );
-        }
-
-        userLocationMarker =
-            L.circleMarker(
-                event.latlng,
-                {
-                    radius: 8,
-                    className:
-                        "user-location-marker"
-                }
-            )
-            .addTo(map)
-            .bindPopup(
-                "📍 You are here"
-            )
-            .openPopup();
-
-    }
+console.log(
+    "Nature:",
+    groups.nature.length
 );
 
-// ==========================================
-// LOCATION ERROR
-// ==========================================
-
-map.on(
-    "locationerror",
-    function () {
-
-        alert(
-            "Unable to access your location. Please allow location permission in your browser."
-        );
-
-    }
+console.log(
+    "Restaurants:",
+    groups.restaurant.length
 );
 
-// ==========================================
-// OPEN LOCATION FROM URL
-// Example:
-// map.html?place=bukit-panchang
-// ==========================================
+console.log(
+    "Car Rental:",
+    groups.rental.length
+);
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const requestedPlace =
-    params.get("place");
-
-if (requestedPlace) {
-
-    const searchName =
-        requestedPlace
-            .replaceAll("-", " ")
-            .toLowerCase()
-            .trim();
-
-    const marker =
-        getAllMarkers().find(
-            item => {
-
-                const name =
-                    (
-                        item.placeName ||
-                        ""
-                    )
-                    .toLowerCase()
-                    .trim();
-
-                return (
-                    name === searchName ||
-                    name.includes(searchName)
-                );
-
-            }
-        );
-
-    if (marker) {
-
-        map.setView(
-            marker.getLatLng(),
-            15,
-            {
-                animate: true
-            }
-        );
-
-        setTimeout(
-            () => {
-                marker.openPopup();
-            },
-            400
-        );
-
-    }
-
-}
-
-// ==========================================
-// MAP READY
-// ==========================================
-
-setTimeout(
-    function () {
-
-        map.invalidateSize();
-
-    },
-    300
+console.log(
+    "Accommodation:",
+    groups.accommodation.length
 );

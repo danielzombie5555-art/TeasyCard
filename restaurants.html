@@ -1,6 +1,348 @@
+```html
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Restaurants & Cafés | Tawau Explorer</title><link rel="stylesheet" href="css/style.css"></head>
-<body><header class="site-header"><a class="logo" href="index.html">Tawau<span>Explorer</span></a><button class="menu-toggle">☰</button><nav class="nav"><a href="index.html">Home</a><a href="destinations.html">Destinations</a><a class="active" href="restaurants.html">Restaurants</a><a href="car-rental.html">Car Rental</a><a href="accommodation.html">Accommodation</a><a href="map.html">Map</a><a href="travel-info.html">Travel Info</a></nav></header>
-<main><section class="page-hero"><p class="eyebrow">TASTE TAWAU</p><h1>Restaurants & Cafés</h1><p>Browse restaurants and cafés in Tawau. Ratings and menu fields are ready for you to verify and update.</p></section>
-<section class="section"><div class="toolbar"><input id="restaurant-search" class="search" placeholder="Search restaurant, cuisine or location..."><div class="tabs"><button class="tab active" data-food-filter="all">All</button><button class="tab" data-food-filter="restaurant">Restaurant</button><button class="tab" data-food-filter="cafe">Café</button><button class="tab" data-food-filter="local">Local Food</button></div></div><div id="restaurant-list" class="card-grid"></div></section></main>
-<footer class="footer"><strong>TawauExplorer</strong><p>© 2026 Tawau Explorer</p></footer><script src="data/restaurants.js"></script><script src="js/app.js"></script></body></html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurants | TeasyCard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .restaurant-section {
+            padding: 50px 5%;
+        }
+
+        .restaurant-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .restaurant-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .restaurant-header p {
+            color: #666;
+        }
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .restaurant-card {
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #e1e8e3;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
+            transition: .25s ease;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .restaurant-card-image {
+            height: 190px;
+            overflow: hidden;
+        }
+
+        .restaurant-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .restaurant-card-content {
+            padding: 20px;
+        }
+
+        .restaurant-card-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .restaurant-category {
+            display: inline-block;
+            font-size: .78rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #eef6f0;
+            margin-bottom: 12px;
+        }
+
+        .restaurant-detail {
+            margin: 8px 0;
+            color: #555;
+            font-size: .9rem;
+        }
+
+        .restaurant-rating {
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .restaurant-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .restaurant-buttons a {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 9px;
+            font-size: .85rem;
+            border: 1px solid #dbe6df;
+        }
+
+        .restaurant-buttons a:first-child {
+            background: #234f35;
+            color: white;
+        }
+
+        .restaurant-buttons a:last-child {
+            color: #234f35;
+            background: white;
+        }
+
+        @media (max-width: 900px) {
+            .restaurant-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .restaurant-section {
+                padding: 35px 4%;
+            }
+
+            .restaurant-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+    <a class="logo" href="index.html">
+        Teasy<span>Card</span>
+    </a>
+
+    <button class="menu-toggle">☰</button>
+
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a class="active" href="restaurants.html">Restaurants</a>
+        <a href="car-rental.html">Car Rental</a>
+        <a href="accommodation.html">Accommodation</a>
+        <a href="map.html">Map</a>
+        <a href="travel-info.html">Travel Info</a>
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="restaurant-section">
+
+    <div class="restaurant-header">
+
+        <p class="eyebrow">TAWAU FOOD GUIDE</p>
+
+        <h1>Restaurants in Tawau</h1>
+
+        <p>
+            Discover local restaurants, seafood,
+            cafes and dining spots around Tawau.
+        </p>
+
+    </div>
+
+
+    <div id="restaurant-grid" class="restaurant-grid"></div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <div>
+        <h3>TeasyCard</h3>
+        <p>Your simple guide to exploring Tawau.</p>
+    </div>
+
+    <div>
+        <p>© 2026 TeasyCard. All rights reserved.</p>
+    </div>
+
+</footer>
+
+
+<script src="data/restaurants.js"></script>
+
+
+<script>
+
+const grid = document.getElementById("restaurant-grid");
+
+
+if (typeof restaurants !== "undefined") {
+
+    restaurants.forEach(function (restaurant) {
+
+        const image =
+            restaurant.image ||
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80";
+
+
+        const rating =
+            restaurant.rating
+            ? `★ ${restaurant.rating}`
+            : "Rating pending";
+
+
+        const phone =
+            restaurant.phone || "Contact restaurant";
+
+
+        const location =
+            restaurant.location || "Tawau";
+
+
+        const hours =
+            restaurant.hours || "Contact restaurant";
+
+
+        const category =
+            restaurant.category || "Restaurant";
+
+
+        const description =
+            restaurant.description ||
+            "A dining place located in Tawau.";
+
+
+        const map =
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                restaurant.name + ", " + location
+            )}`;
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "restaurant-card";
+
+
+        card.innerHTML = `
+
+            <div class="restaurant-card-image">
+
+                <img
+                    src="${image}"
+                    alt="${restaurant.name}"
+                    loading="lazy"
+                >
+
+            </div>
+
+
+            <div class="restaurant-card-content">
+
+                <span class="restaurant-category">
+                    ${category}
+                </span>
+
+
+                <h3>
+                    ${restaurant.name}
+                </h3>
+
+
+                <div class="restaurant-rating">
+                    ${rating}
+                </div>
+
+
+                <p class="restaurant-detail">
+                    📍 ${location}
+                </p>
+
+
+                <p class="restaurant-detail">
+                    🕐 ${hours}
+                </p>
+
+
+                <p class="restaurant-detail">
+                    📞 ${phone}
+                </p>
+
+
+                <p class="restaurant-detail">
+                    ${description}
+                </p>
+
+
+                <div class="restaurant-buttons">
+
+                    <a href="tel:${phone}">
+                        Call
+                    </a>
+
+                    <a
+                        href="${map}"
+                        target="_blank"
+                        rel="noopener">
+                        View Map
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+else {
+
+    grid.innerHTML = `
+        <p>
+            Restaurant data could not be loaded.
+        </p>
+    `;
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
