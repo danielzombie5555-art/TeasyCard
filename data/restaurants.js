@@ -8,8 +8,9 @@ const restaurants = [
     category: "Grill & Western",
     rating: 4.6,
     description: "A popular grill restaurant in Fajar Complex serving grilled dishes and casual dining.",
-   lat: 4.24646,
-lon: 117.88971,
+    lat: 4.24711,
+    lon: 117.89067,
+    menu: "menus/pate-grill-house.html",
     image: "images/restaurants/pate-grill-house.jpg"
   },
 
@@ -22,8 +23,9 @@ lon: 117.88971,
     category: "Seafood",
     rating: 4.0,
     description: "Seafood restaurant located in central Tawau.",
- lat: 4.24900,
-lon: 117.89100,
+    lat: 4.247498,
+    lon: 117.892337,
+    menu: "menus/sri-titingan-seafood.html",
     image: "images/restaurants/sri-titingan.jpg"
   },
 
@@ -36,8 +38,9 @@ lon: 117.89100,
     category: "Seafood",
     rating: 4.1,
     description: "Seafood restaurant at Kubota Square, suitable for lunch and dinner.",
-lat: 4.242845,
-lon: 117.890244,
+    lat: 4.2587618,
+    lon: 117.915702,
+    menu: "menus/kam-ling-seafood.html",
     image: "images/restaurants/kam-ling.jpg"
   },
 
@@ -50,8 +53,9 @@ lon: 117.890244,
     category: "Seafood",
     rating: null,
     description: "A seafood dining option along Jalan Chen Fook, Tawau.",
-    lat: 4.242505,
-lon: 117.888084,
+    lat: 4.2425681,
+    lon: 117.889052,
+    menu: "menus/good-view-seafood.html",
     image: "images/restaurants/good-view.jpg"
   },
 
@@ -64,9 +68,9 @@ lon: 117.888084,
     category: "Thai",
     rating: 4.9,
     description: "Thai restaurant and cafe serving Thai-inspired dishes in Tawau.",
-   lat: 4.25800,
-lon: 117.90000,
-
+    lat: 4.273541,
+    lon: 117.897590,
+    menu: "menus/thai-spoon.html",
     image: "images/restaurants/thai-spoon.jpg"
   },
 
@@ -79,8 +83,8 @@ lon: 117.90000,
     category: "Cafe & Kopitiam",
     rating: null,
     description: "A local-style kopitiam suitable for breakfast, coffee and casual meals.",
-    lat: 4.24700,
-lon: 117.88900,
+    lat: 4.246924,
+    lon: 117.890269,
     image: "images/restaurants/dojo-nanyang.jpg"
   },
 
@@ -93,8 +97,8 @@ lon: 117.88900,
     category: "Italian",
     rating: 4.2,
     description: "Italian-style restaurant offering a relaxed dining experience in Tawau.",
- lat: 4.25700,
-lon: 117.91900,
+    lat: 4.25897,
+    lon: 117.912315,
     image: "images/restaurants/olive-bistro.jpg"
   },
 
@@ -107,8 +111,8 @@ lon: 117.91900,
     category: "Cafe & Restaurant",
     rating: 4.1,
     description: "Cafe and restaurant located at Kubota Sentral.",
-    lat: 4.25600,
-lon: 117.91600,
+    lat: 4.257007,
+    lon: 117.914552,
     image: "images/restaurants/sage-cafe.jpg"
   },
 
@@ -121,8 +125,8 @@ lon: 117.91600,
     category: "Cafe & Restaurant",
     rating: 4.3,
     description: "A cafe and restaurant at Kubota Square, open from early morning.",
- lat: 4.25598,
-lon: 117.91577,
+    lat: 4.25599448,
+    lon: 117.9158521,
     image: "images/restaurants/chiffonade.jpg"
   },
 
@@ -135,8 +139,8 @@ lon: 117.91577,
     category: "Grill",
     rating: null,
     description: "Casual grill and dining spot at Kubota Square.",
-  lat: 4.25698,
-lon: 117.91552,
+    lat: 4.257033973153795,
+    lon: 117.91562874315058,
     image: "images/restaurants/gathering-grill.jpg"
   },
 
@@ -149,8 +153,8 @@ lon: 117.91552,
     category: "Restaurant",
     rating: 4.0,
     description: "Restaurant located in Bandar Tawau offering casual dining.",
-lat: 4.258494,
-lon: 117.922232,
+    lat: 4.258408300149815,
+    lon: 117.92221575630903,
     image: "images/restaurants/taste-two.jpg"
   },
 
@@ -163,8 +167,8 @@ lon: 117.922232,
     category: "Restaurant",
     rating: null,
     description: "Restaurant located at Kubota Sentral.",
-lat: 4.25600,
-lon: 117.91700,
+    lat: 4.256017267429298,
+    lon: 117.91454396910648,
     image: "images/restaurants/trufflebar.jpg"
   },
 
@@ -177,8 +181,8 @@ lon: 117.91700,
     category: "Chicken Restaurant",
     rating: 4.8,
     description: "Popular chicken restaurant located near Jalan Haji Karim.",
-   lat: 4.24750,
-lon: 117.89050,
+    lat: 4.247036,
+    lon: 117.890357,
     image: "images/restaurants/raizu.jpg"
   },
 
@@ -191,22 +195,8 @@ lon: 117.89050,
     category: "Restaurant",
     rating: 4.4,
     description: "A restaurant located in Taman Unipark, Tawau.",
-    lat: 4.25700,
-lon: 117.90000,
+    lat: 4.287046286880204,
+    lon: 117.88587615965454,
     image: "images/restaurants/cottage-garden.jpg"
-  },
-
-  {
-    id: "restoran-sri-keningau",
-    name: "Restoran Sri Keningau",
-    location: "Jalan Haji Karim",
-    phone: "+60 19-851 1231",
-    hours: "7:00 AM – 10:00 PM",
-    category: "Local Restaurant",
-    rating: 4.0,
-    description: "Local restaurant along Jalan Haji Karim, suitable for breakfast and daily meals.",
-   lat: 4.24698,
-lon: 117.88984,
-    image: "images/restaurants/sri-keningau.jpg"
   }
 ];
