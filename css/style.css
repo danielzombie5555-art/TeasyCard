@@ -301,5 +301,176 @@
     .popup-button {
         width: 100%;
     }
+    /* =========================
+   VIDEO IN CARD
+========================= */
+
+.card-video {
+    width: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+.card-video video {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    background: #000;
+}
+
+@media (max-width: 768px) {
+    .card-video video {
+        height: 210px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-video video {
+        height: 200px;
+    }
+}
+/* =========================
+   VIDEO BUTTON
+========================= */
+
+.video-btn {
+    background: #234f35;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.video-btn:hover {
+    background: #173a26;
+}
+
+
+/* =========================
+   VIDEO MODAL
+========================= */
+
+.video-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.video-modal.show {
+    display: flex;
+}
+
+.video-modal-content {
+    position: relative;
+
+    width: min(900px, 100%);
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+.video-modal-content h2 {
+    margin: 0 45px 15px 0;
+
+    color: #234f35;
+
+    font-size: 22px;
+}
+
+.video-modal-content video {
+    display: block;
+
+    width: 100%;
+
+    max-height: 70vh;
+
+    background: #000;
+
+    border-radius: 10px;
+}
+
+.video-modal-close {
+    position: absolute;
+
+    top: 10px;
+    right: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #234f35;
+
+    color: white;
+
+    font-size: 28px;
+
+    line-height: 38px;
+
+    cursor: pointer;
+}
+
+.video-modal-close:hover {
+    background: #173a26;
+}
+
+
+@media (max-width: 600px) {
+
+    .video-modal {
+        padding: 10px;
+    }
+
+    .video-modal-content {
+        padding: 15px;
+
+        border-radius: 12px;
+    }
+
+    .video-modal-content h2 {
+        font-size: 18px;
+    }
+
+    .video-modal-content video {
+        max-height: 60vh;
+    }
+
+}
+.info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #f5f8f5;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.info-row strong {
+    color: #234f35;
+    font-size: 14px;
+}
+
+.info-row span {
+    color: #555;
+    line-height: 1.5;
+}
 
 }
