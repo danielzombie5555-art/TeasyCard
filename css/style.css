@@ -473,4 +473,26 @@
     line-height: 1.5;
 }
 
+.info-row {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f5f8f5;
+    border-radius: 8px;
+    border-left: 3px solid #234f35;
+}
+
+.info-row strong {
+    display: block;
+    color: #234f35;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.info-row span {
+    display: block;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
 }

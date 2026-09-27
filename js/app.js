@@ -20,7 +20,6 @@ const destinationVideos = {
 /* =========================
    DESTINATION CARD
 ========================= */
-
 function destinationCard(x) {
     const video = destinationVideos[x.id];
 
@@ -90,7 +89,10 @@ function destinationCard(x) {
                     }
 
                     ${
-                        x.lat && x.lon && x.lat !== 0 && x.lon !== 0
+                        x.lat && 
+                        x.lon && 
+                        x.lat !== 0 && 
+                        x.lon !== 0
                         ? `
                         <a
                             href="https://www.google.com/maps?q=${x.lat},${x.lon}"
@@ -105,6 +107,7 @@ function destinationCard(x) {
                 </div>
 
             </div>
+
         </article>
     `;
 }
